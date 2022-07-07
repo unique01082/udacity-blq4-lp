@@ -59,7 +59,7 @@ main {
 
 section {
   position: relative;
-  min-height: 80vh;
+  min-height: 100vh;
 }
 
 /* ---- Module Rules ---- */
@@ -85,6 +85,7 @@ section {
 
 .navbar__menu .active-menu-item {
   text-decoration: underline;
+  background-color: #2cdde944;
 
   font-weight: bolder;
 }

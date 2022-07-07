@@ -28,26 +28,6 @@ console.log("sections :>> ", sections);
 
 const map = new Map();
 
-sections.forEach((section) => {
-  const menuItem = generateMenuItem(section);
-  addMenuItem(menuItem);
-  map.set(section.id, menuItem);
-});
-
-let observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      console.log(entry.target.id);
-      clearState();
-      entry.target.classList.add("active-section");
-      map.get(entry.target.id).classList.add("active-menu-item");
-    }
-  });
-});
-document.querySelectorAll("section[data-nav]").forEach((section) => {
-  observer.observe(section);
-});
-
 /**
  * End Global Variables
  * Start Helper Functions
@@ -59,8 +39,11 @@ function generateMenuItem(section) {
   menuItem.classList.add("menu__link");
   menuItem.innerText =
     section.getAttribute("data-nav") ?? section.getAttribute("id");
+
+  // Scroll to section on link click
   menuItem.addEventListener("click", () => {
-    section.scrollIntoView({
+    // Scroll to section
+    document.getElementById(section.id).scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
@@ -87,19 +70,32 @@ function clearState() {
  */
 
 // build the nav
+sections.forEach((section) => {
+  // Build menu
+  const menuItem = generateMenuItem(section);
+  addMenuItem(menuItem);
+  map.set(section.id, menuItem);
+});
 
-// Add class 'active' to section when near top of viewport
-
-// Scroll to anchor ID using scrollTO event
+let observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // Set sections as active
+        console.log(entry.target.id);
+        clearState();
+        entry.target.classList.add("active-section");
+        map.get(entry.target.id).classList.add("active-menu-item");
+      }
+    });
+  },
+  { rootMargin: "-100px" }
+);
+document.querySelectorAll("section[data-nav]").forEach((section) => {
+  observer.observe(section);
+});
 
 /**
  * End Main Functions
- * Begin Events
  *
  */
-
-// Build menu
-
-// Scroll to section on link click
-
-// Set sections as active
