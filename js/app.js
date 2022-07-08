@@ -24,7 +24,6 @@
  */
 const menu = document.getElementById("navbar__list");
 const sections = Array.from(document.querySelectorAll("section[data-nav]"));
-console.log("sections :>> ", sections);
 
 const map = new Map();
 
@@ -82,7 +81,6 @@ let observer = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         // Set sections as active
-        console.log(entry.target.id);
         clearState();
         entry.target.classList.add("active-section");
         map.get(entry.target.id).classList.add("active-menu-item");
